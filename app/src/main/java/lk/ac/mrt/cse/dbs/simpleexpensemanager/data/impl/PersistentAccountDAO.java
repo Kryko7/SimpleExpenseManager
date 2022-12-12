@@ -156,6 +156,7 @@ public class PersistentAccountDAO implements AccountDAO {
         String selection = "account_no" + "LIKE ?";
         String[] selectionArgs = {accountNo};
         int deleteRows = db.delete("account", selection, selectionArgs);
+        db.close();
     }
 
     @Override
@@ -187,8 +188,10 @@ public class PersistentAccountDAO implements AccountDAO {
         switch (expenseType) {
             case EXPENSE:
                 balance = balance - amount;
+                break;
             case INCOME:
                 balance = balance + amount;
+                break;
         }
         values.put("balance", balance);
 
@@ -198,5 +201,6 @@ public class PersistentAccountDAO implements AccountDAO {
                 selection,
                 selectionArgs
         );
+        db.close();
     }
 }
